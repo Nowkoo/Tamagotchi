@@ -41,7 +41,7 @@ public class CatStats : MonoBehaviour, IPointerDownHandler
 
     private void Start()
     {
-        Debug.Log("Iniciando Tamagotchi...");        
+        Debug.Log("Iniciando Tamagotchi...");
 
         if (stats.GetIsDead() && !stats.GetEgg())
         {
@@ -67,7 +67,7 @@ public class CatStats : MonoBehaviour, IPointerDownHandler
 
         for (int i = 0; i < stats.GetPoopAmount(); i++)
         {
-            MakeDirty();
+            poopManager.SpawnPoop();
         }
 
         System.DateTime lastCheckTime = System.DateTime.Parse(stats.GetLastCheckTime());
@@ -224,11 +224,11 @@ public class CatStats : MonoBehaviour, IPointerDownHandler
 
         if (stats.GetPoopAmount() > 0)
         {
-            stats.SetPoopAmount(0);
             Debug.Log("El Tamagotchi y su habitación ahora están limpios.");
             if (!stats.GetIsSleeping())
                 bubblesManager.PlayBubble("happy");
             poopManager.ClearAllPoops();
+            stats.ResetPoopAmount();
             ResetRefuse();
         }
         else if (!stats.GetIsSleeping())
@@ -451,11 +451,17 @@ public class CatStats : MonoBehaviour, IPointerDownHandler
 
     private void MakeDirty()
     {
-        if (stats.GetPoopAmount() < 9)
+        if (stats.GetPoopAmount() < 11)
+        {
+            poopManager.SpawnPoop();
             stats.IncreasePoopAmount();
-        recentlySlept = false;
-        poopManager.SpawnPoop();
-        Debug.Log("El Tamagotchi se ensució.");
+
+            recentlySlept = false;
+            Debug.Log("El Tamagotchi se ensució.");
+        } else
+        {
+            Debug.Log("El Tamagotchi no puede seguir cagando.");
+        }
     }
 
     private void ReduceHunger()
@@ -657,6 +663,7 @@ public class CatStats : MonoBehaviour, IPointerDownHandler
     {
         InitializeNewStats();
         poopManager.ClearAllPoops();
+        stats.ResetPoopAmount();
     }
 
     public void OnPointerDown(PointerEventData eventData)

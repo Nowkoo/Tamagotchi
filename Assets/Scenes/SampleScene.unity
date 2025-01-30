@@ -486,6 +486,7 @@ MonoBehaviour:
   statsDisplay: {fileID: 1191931543}
   eatMenu: {fileID: 730621358}
   eggObject: {fileID: 887332021882503616}
+  eggScript: {fileID: 1376468199544313959}
 --- !u!82 &129305221
 AudioSource:
   m_ObjectHideFlags: 0

@@ -85,10 +85,10 @@ public class CatStatsData
     public bool GetIsSick() => isSick;
     public void SetIsSick(bool value) => isSick = value;
 
-    public void IncreasePoopAmount() => poopAmount = Mathf.Clamp(poopAmount + 1, 0, 9);
+    public void IncreasePoopAmount() => poopAmount++;
         
     public int GetPoopAmount() => poopAmount;
-    public void SetPoopAmount(int value) => poopAmount = Mathf.Max(value, 0);
+    public void ResetPoopAmount() => poopAmount = 0;
 
     public bool GetEgg() => egg;
     public void SetEgg(bool value) => egg = value;
